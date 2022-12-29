@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: false }));
 
 //getdetails
 
-app.get("./", (request, response) => {
+app.get("/", (request, response) => {
   response.json({ name: "naisel" });
   console.log("testing");
 });
