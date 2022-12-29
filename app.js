@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.get("/", (request, response) => {
   response.json({
-    message: "Welcome to the cargo app",
+    message: "Welcome to the cargos app",
     routes: [
       {
         route: "/users",
