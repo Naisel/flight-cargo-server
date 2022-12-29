@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.get("/", (request, response) => {
   response.json({
-    message: "Welcome to the cargos app",
+    message: "Welcome to the cargos webapp",
     routes: [
       {
         route: "/users",
@@ -38,3 +38,4 @@ app.get("/", (request, response) => {
 
 
 app.listen(process.env.PORT, () => console.log("app is running"));
+
