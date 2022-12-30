@@ -5,9 +5,13 @@ const dotenv = require("dotenv");
 const db = require("./queries");
 const { request } = require("http");
 const { response } = require("express");
+const bodyparser=require("body-parser");
+const bodyParser = require("body-parser");
 
 dotenv.config();
-
+app.use(bodyParser.json());
+var urlencodedParser=bodyparser.urlencoded({extended:true});
+app.set('view engine','ejs');
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -25,8 +29,16 @@ app.get("/", (request, response) => {
 });
 
 app.get("/users", db.getUsers);
+app.get("/register",(req,res)=>{
+  res.render('register');
+})
+app.post("/register",urlencodedParser,(req,res)=>{
+  const {userid,username,userage}=request.body;
+  db.RegisterUsers
+})
 
 //getdetails
+
 
 app.get("/", (request, response) => {
   response.json({ name: "naisel" });
