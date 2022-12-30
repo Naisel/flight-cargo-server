@@ -76,6 +76,8 @@ const loginAdmin = (request, response) => {
     response.status(200).json(results.rows);
   });
 };
+
+
 const showFlights = (request, response) => {
   pool.query("SELECT * FROM flights ", (error, results) => {
     if (error) {
@@ -141,6 +143,58 @@ const showDistances = (request, response) => {
   });
 };
 
+//admin insert distances
+
+const insertDistances = (request, response) => {
+  const {tid,source, dest, distance}=request.body;
+  const query = "Insert into distances (tid,source, dest, distance) values($1,$2,$3, $4)"
+  pool.query(query ,[tid,source, dest, distance], (error, results) => {
+    if (error) {
+      return response.status(400).json({
+        success: false,
+        error: error.name,
+        message: error.message,
+      });
+    }
+    response.status(201).send(`Distance added with ID: ${results.insertId}`);
+  });
+};
+
+//admin insert routes
+
+const insertRoutes = (request, response) => {
+  const {rid,fid,tid,fday,ftime,rem_space}=request.body;
+  const query = "Insert into routes (rid,fid,tid,fday,ftime,rem_space) values($1,$2,$3,$4,$5,$6)"
+  pool.query(query ,[rid,fid,tid,fday,ftime,rem_space], (error, results) => {
+    if (error) {
+      return response.status(400).json({
+        success: false,
+        error: error.name,
+        message: error.message,
+      });
+    }
+    response.status(201).send(`Routes added with ID: ${results.insertId}`);
+  });
+};
+
+//admin insert flights
+
+const insertFlights = (request, response) => {
+  const {fid,fname,fspace,frating}=request.body;
+  const query = "Insert into routes (fid,fname,fspace,frating) values($1,$2,$3,$4)"
+  pool.query(query ,[fid,fname,fspace,frating], (error, results) => {
+    if (error) {
+      return response.status(400).json({
+        success: false,
+        error: error.name,
+        message: error.message,
+      });
+    }
+    response.status(201).send(`Flights added with ID: ${results.insertId}`);
+  });
+};
+
+
 module.exports = {
   getUsers,
   RegisterUsers,
@@ -150,5 +204,8 @@ module.exports = {
   showBookings,
   showPassenger,
   showRoutes,
-  showDistances
+  showDistances,
+  insertDistances,
+  insertFlights,
+  insertRoutes,
 };
