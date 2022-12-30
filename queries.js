@@ -207,6 +207,23 @@ const insertFlights = (request, response) => {
   });
 };
 
+const flightDetails = (request, response) => {
+  const { source,dest,day ,req_space} = request.body;
+  const query =
+    "select routes.rid,flights.fname,flights.frating from flights,distances,routes where distances.source=$1 and distances.dest=$2 and routes.fdate=$3 and distances.tid=routes.tid and flights.fid=routes.fid and routes.rem_space>$4";
+  pool.query(query, ['BLR','CCU','2023-01-07',7500], (error, results) => {
+    if (error) {
+      return response.status(400).json({
+        success: false,
+        error: error.name,
+        message: error.message,
+      });
+    }
+    response.status(200).json(results.rows);
+  });
+};
+
+
 module.exports = {
   getUsers,
   RegisterUsers,
@@ -220,4 +237,5 @@ module.exports = {
   insertDistances,
   insertFlights,
   insertRoutes,
+  flightDetails,
 };
