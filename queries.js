@@ -24,13 +24,13 @@ const getUsers = (request, response) => {
   });
 };
 
-
 //user registration
 
 const RegisterUsers = (request, response) => {
-  const {username,userage, password, email}=request.body;
-  const query = "Insert into passenger (pname, pgender, password, email) values($1,$2,crypt($3, gen_salt('bf')), $4)"
-  pool.query(query ,[username, userage, password, email], (error, results) => {
+  const { username, userage, password, email } = request.body;
+  const query =
+    "Insert into passenger (pname, pgender, password, email) values($1,$2,crypt($3, gen_salt('bf')), $4)";
+  pool.query(query, [username, userage, password, email], (error, results) => {
     if (error) {
       return response.status(400).json({
         success: false,
@@ -46,8 +46,9 @@ const RegisterUsers = (request, response) => {
 
 const loginUser = (request, response) => {
   const { username, password } = request.body;
-  const query = "select pid from passenger where pname = $1";
-  pool.query(query, ["tom"], (error, results) => {
+  const query =
+    "select pid from passenger where pname = $1 and password = crypt($2, password)";
+  pool.query(query, [username, password], (error, results) => {
     if (error) {
       return response.status(400).json({
         success: false,
@@ -65,7 +66,7 @@ const loginAdmin = (request, response) => {
   const { username, password } = request.body;
   const query =
     "select aid from admin where aname = $1 and password = crypt($2, password)";
-  pool.query(query, ["shinoj", "shinoj12345"], (error, results) => {
+  pool.query(query, [username, password], (error, results) => {
     if (error) {
       return response.status(400).json({
         success: false,
@@ -77,6 +78,7 @@ const loginAdmin = (request, response) => {
   });
 };
 
+//show flights
 
 const showFlights = (request, response) => {
   pool.query("SELECT * FROM flights ", (error, results) => {
@@ -91,6 +93,7 @@ const showFlights = (request, response) => {
   });
 };
 
+//show bookings
 const showBookings = (request, response) => {
   pool.query("SELECT * FROM bookings ", (error, results) => {
     if (error) {
@@ -104,6 +107,7 @@ const showBookings = (request, response) => {
   });
 };
 
+//show passenger
 const showPassenger = (request, response) => {
   pool.query("SELECT * FROM passenger ", (error, results) => {
     if (error) {
@@ -117,6 +121,7 @@ const showPassenger = (request, response) => {
   });
 };
 
+//show routes
 const showRoutes = (request, response) => {
   pool.query("SELECT * FROM routes ", (error, results) => {
     if (error) {
@@ -130,8 +135,9 @@ const showRoutes = (request, response) => {
   });
 };
 
+//show distances
 const showDistances = (request, response) => {
-  pool.query("SELECT * FROM routes ", (error, results) => {
+  pool.query("SELECT * FROM distances ", (error, results) => {
     if (error) {
       return response.status(400).json({
         success: false,
@@ -146,9 +152,10 @@ const showDistances = (request, response) => {
 //admin insert distances
 
 const insertDistances = (request, response) => {
-  const {tid,source, dest, distance}=request.body;
-  const query = "Insert into distances (tid,source, dest, distance) values($1,$2,$3, $4)"
-  pool.query(query ,[tid,source, dest, distance], (error, results) => {
+  const { tid, source, dest, distance } = request.body;
+  const query =
+    "Insert into distances (tid,source, dest, distance) values($1,$2,$3, $4)";
+  pool.query(query, [tid, source, dest, distance], (error, results) => {
     if (error) {
       return response.status(400).json({
         success: false,
@@ -163,26 +170,32 @@ const insertDistances = (request, response) => {
 //admin insert routes
 
 const insertRoutes = (request, response) => {
-  const {rid,fid,tid,fday,ftime,rem_space}=request.body;
-  const query = "Insert into routes (rid,fid,tid,fday,ftime,rem_space) values($1,$2,$3,$4,$5,$6)"
-  pool.query(query ,[rid,fid,tid,fday,ftime,rem_space], (error, results) => {
-    if (error) {
-      return response.status(400).json({
-        success: false,
-        error: error.name,
-        message: error.message,
-      });
+  const { rid, fid, tid, fday, ftime, rem_space } = request.body;
+  const query =
+    "Insert into routes (rid,fid,tid,fday,ftime,rem_space) values($1,$2,$3,$4,$5,$6)";
+  pool.query(
+    query,
+    [rid, fid, tid, fday, ftime, rem_space],
+    (error, results) => {
+      if (error) {
+        return response.status(400).json({
+          success: false,
+          error: error.name,
+          message: error.message,
+        });
+      }
+      response.status(201).send(`Routes added with ID: ${results.insertId}`);
     }
-    response.status(201).send(`Routes added with ID: ${results.insertId}`);
-  });
+  );
 };
 
 //admin insert flights
 
 const insertFlights = (request, response) => {
-  const {fid,fname,fspace,frating}=request.body;
-  const query = "Insert into routes (fid,fname,fspace,frating) values($1,$2,$3,$4)"
-  pool.query(query ,[fid,fname,fspace,frating], (error, results) => {
+  const { fid, fname, fspace, frating } = request.body;
+  const query =
+    "Insert into routes (fid,fname,fspace,frating) values($1,$2,$3,$4)";
+  pool.query(query, [fid, fname, fspace, frating], (error, results) => {
     if (error) {
       return response.status(400).json({
         success: false,
@@ -193,7 +206,6 @@ const insertFlights = (request, response) => {
     response.status(201).send(`Flights added with ID: ${results.insertId}`);
   });
 };
-
 
 module.exports = {
   getUsers,
