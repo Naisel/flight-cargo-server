@@ -198,7 +198,7 @@ const insertFlights = (request, response) => {
 const flightDetails = (request, response) => {
   const { source, dest ,day} = request.body;
   const query =
-    "select fid,fname from flights,distances,routes where distance.source=$1 and distance.dest=$2 routes.fday=$3 and flights.fid=routes.fid and distance.tid=routes.tid";
+    "SELECT fid,fname from flights,distances,routes where distance.source=$1 and distance.dest=$2 routes.fday=$3 and flights.fid=routes.fid and distance.tid=routes.tid";
   pool.query(query, [source,dest,day], (error, results) => {
     if (error) {
       return response.status(400).json({
