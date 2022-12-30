@@ -207,6 +207,8 @@ const insertFlights = (request, response) => {
   });
 };
 
+//get flight details on searching
+
 
 const flightDetails = (request, response) => {
   const { source, dest, date, req_space } = request.body;
@@ -228,36 +230,30 @@ const flightDetails = (request, response) => {
 
 const Booking = (request, response) => {
   const { pid,space_required,rid,payment } = request.body;
-  const query =
+  const query1 =
     "Insert into bookings (pid,space_required,rid,payment) values($1,$2,$3,$4)";
-  const query1="Update routes set rem_space=rem_space-$1 where rid=$2"
-  pool.query(
-    query,
-    [5,4000,101,9000],
-    (error, results) => {
-      if (error) {
-        return response.status(400).json({
-          success: false,
-          error: error.name,
-          message: error.message,
-        });
-      }
-      response.status(201).send(`Booked Succesfully with ID: ${results.insertId}`);
+  const query2 = "Update routes set rem_space=rem_space-$1 where rid=$2";
+  pool.query(query1, [pid, space_required, rid, payment], (error, results) => {
+    if (error) {
+      return response.status(400).json({
+        success: false,
+        error: error.name,
+        message: error.message,
+      });
     }
-  );
-  pool.query(
-    query1,[4000,101],
-    (error, results) => {
-      if (error) {
-        return response.status(400).json({
-          success: false,
-          error: error.name,
-          message: error.message,
-        });
-      }
-      response.status(201).send(`Booked Succesfully with ID: ${results.insertId}`);
+    response
+      .status(201)
+      .send(`Booked Succesfully with ID: ${results.insertId}`);
+  });
+  pool.query(query2, [space_required, rid], (error, results) => {
+    if (error) {
+      return response.status(400).json({
+        success: false,
+        error: error.name,
+        message: error.message,
+      });
     }
-  );
+  });
 };
 
 module.exports = {
