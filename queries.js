@@ -209,17 +209,10 @@ const insertFlights = (request, response) => {
 
 
 const flightDetails = (request, response) => {
-<<<<<<< Updated upstream
-  const { source,dest,date ,req_space} = request.body;
-  const query =
-    "select routes.rid,flights.fname,flights.frating from flights,distances,routes where distances.source=$1 and distances.dest=$2 and routes.fdate=$3 and distances.tid=routes.tid and flights.fid=routes.fid and routes.rem_space>$4";
-    pool.query(query, [source,dest,date,req_space], (error, results) => {
-=======
   const { source, dest, date, req_space } = request.body;
   const query =
     "select routes.rid,flights.fname,flights.frating from flights,distances,routes where distances.source=$1 and distances.dest=$2 and routes.fdate=$3 and distances.tid=routes.tid and flights.fid=routes.fid and routes.rem_space>$4";
   pool.query(query, [source, dest, date, req_space], (error, results) => {
->>>>>>> Stashed changes
     if (error) {
       return response.status(400).json({
         success: false,
