@@ -23,9 +23,14 @@ const getUsers = (request, response) => {
     response.status(200).json(results.rows);
   });
 };
+
+
+//user registration
+
 const RegisterUsers = (request, response) => {
-  const {userid,username,userage}=request.body;
-  pool.query("Insert into users values($1,$2,$3) ",[userid,username,userage], (error, results) => {
+  const {username,userage, password, email}=request.body;
+  const query = "Insert into passenger (pname, pgender, password, email) values($1,$2,crypt($3, gen_salt('bf')), $4)"
+  pool.query(query ,[username, userage, password, email], (error, results) => {
     if (error) {
       return response.status(400).json({
         success: false,
@@ -74,11 +79,7 @@ const loginAdmin = (request, response) => {
 
 module.exports = {
   getUsers,
-<<<<<<< Updated upstream
   RegisterUsers,
-  pool,
-=======
   loginUser,
   loginAdmin,
->>>>>>> Stashed changes
 };

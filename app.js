@@ -25,6 +25,10 @@ app.get("/", (request, response) => {
         methods: ["GET", "POST"],
       },
       {
+        route: "/register",
+        methods: ["POST"],
+      },
+      {
         route: "/login/user",
         methods: ["GET", "POST"],
       },
@@ -37,28 +41,9 @@ app.get("/", (request, response) => {
 });
 
 app.get("/users", db.getUsers);
-<<<<<<< Updated upstream
-app.get("/register",(req,res)=>{
-  res.render('register');
-})
-app.post("/register",urlencodedParser,(req,res)=>{
-  const {userid,username,userage}=request.body;
-  db.RegisterUsers
-})
-=======
+app.post("/register", db.RegisterUsers);
 app.get("/login/user", db.loginUser);
 app.get("/login/admin", db.loginAdmin);
->>>>>>> Stashed changes
-
-
-<<<<<<< Updated upstream
-
-app.get("/", (request, response) => {
-  response.json({ name: "naisel" });
-  console.log("testing");
-});
-=======
->>>>>>> Stashed changes
 
 
 
