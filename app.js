@@ -64,6 +64,10 @@ app.get("/", (request, response) => {
         route: "/FlightDetails",
         methods: ["GET", "POST"],
       },
+      {
+        route: "/Bookings",
+        methods: ["GET", "POST"],
+      },
     ],
   });
 });
@@ -81,6 +85,7 @@ app.get("/login/admin/insertDistances",db.insertDistances);
 app.get("/login/admin/insertRoutes",db.insertRoutes);
 app.get("/login/admin/insertFlights",db.insertFlights);
 app.get("/FlightDetails",db.flightDetails);
+app.get("/Bookings",db.Booking);
 
 
 app.listen(process.env.PORT, () => console.log("app is running"));

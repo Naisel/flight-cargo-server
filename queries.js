@@ -208,10 +208,10 @@ const insertFlights = (request, response) => {
 };
 
 const flightDetails = (request, response) => {
-  const { source,dest,day ,req_space} = request.body;
+  const { source,dest,date ,req_space} = request.body;
   const query =
     "select routes.rid,flights.fname,flights.frating from flights,distances,routes where distances.source=$1 and distances.dest=$2 and routes.fdate=$3 and distances.tid=routes.tid and flights.fid=routes.fid and routes.rem_space>$4";
-  pool.query(query, ['BLR','CCU','2023-01-07',7500], (error, results) => {
+    pool.query(query, [source,dest,date,req_space], (error, results) => {
     if (error) {
       return response.status(400).json({
         success: false,
@@ -223,6 +223,41 @@ const flightDetails = (request, response) => {
   });
 };
 
+//Booking
+
+const Booking = (request, response) => {
+  const { pid,space_required,rid,payment } = request.body;
+  const query =
+    "Insert into bookings (pid,space_required,rid,payment) values($1,$2,$3,$4)";
+  const query1="Update routes set rem_space=rem_space-$1 where rid=$2"
+  pool.query(
+    query,
+    [5,4000,101,9000],
+    (error, results) => {
+      if (error) {
+        return response.status(400).json({
+          success: false,
+          error: error.name,
+          message: error.message,
+        });
+      }
+      response.status(201).send(`Booked Succesfully with ID: ${results.insertId}`);
+    }
+  );
+  pool.query(
+    query1,[4000,101],
+    (error, results) => {
+      if (error) {
+        return response.status(400).json({
+          success: false,
+          error: error.name,
+          message: error.message,
+        });
+      }
+      response.status(201).send(`Booked Succesfully with ID: ${results.insertId}`);
+    }
+  );
+};
 
 module.exports = {
   getUsers,
@@ -238,4 +273,5 @@ module.exports = {
   insertFlights,
   insertRoutes,
   flightDetails,
+  Booking,
 };
