@@ -1,3 +1,5 @@
+const { query } = require("express");
+
 const Pool = require("pg").Pool;
 require("dotenv").config();
 
@@ -35,9 +37,48 @@ const RegisterUsers = (request, response) => {
   });
 };
 
+//User login
+
+const loginUser = (request, response) => {
+  const { username, password } = request.body;
+  const query = "select pid from passenger where pname = $1";
+  pool.query(query, ["tom"], (error, results) => {
+    if (error) {
+      return response.status(400).json({
+        success: false,
+        error: error.name,
+        message: error.message,
+      });
+    }
+    response.status(200).json(results.rows);
+  });
+};
+
+//admin login
+
+const loginAdmin = (request, response) => {
+  const { username, password } = request.body;
+  const query =
+    "select aid from admin where aname = $1 and password = crypt($2, password)";
+  pool.query(query, ["shinoj", "shinoj12345"], (error, results) => {
+    if (error) {
+      return response.status(400).json({
+        success: false,
+        error: error.name,
+        message: error.message,
+      });
+    }
+    response.status(200).json(results.rows);
+  });
+};
 
 module.exports = {
   getUsers,
+<<<<<<< Updated upstream
   RegisterUsers,
   pool,
+=======
+  loginUser,
+  loginAdmin,
+>>>>>>> Stashed changes
 };
