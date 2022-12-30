@@ -27,19 +27,23 @@ const getUsers = (request, response) => {
 //user registration
 
 const RegisterUsers = (request, response) => {
-  const { username, userage, password, email } = request.body;
+  const { username, userage, usergender, password, email } = request.body;
   const query =
-    "Insert into passenger (pname, pgender, password, email) values($1,$2,crypt($3, gen_salt('bf')), $4)";
-  pool.query(query, [username, userage, password, email], (error, results) => {
-    if (error) {
-      return response.status(400).json({
-        success: false,
-        error: error.name,
-        message: error.message,
-      });
+    "Insert into passenger (pname, page, pgender, password, email) values($1,$2,$3,crypt($4, gen_salt('bf')), $5)";
+  pool.query(
+    query,
+    [username, userage, usergender, password, email],
+    (error, results) => {
+      if (error) {
+        return response.status(400).json({
+          success: false,
+          error: error.name,
+          message: error.message,
+        });
+      }
+      response.status(201).send(`User added with ID: ${results.insertId}`);
     }
-    response.status(201).send(`User added with ID: ${results.insertId}`);
-  });
+  );
 };
 
 //User login
@@ -170,23 +174,19 @@ const insertDistances = (request, response) => {
 //admin insert routes
 
 const insertRoutes = (request, response) => {
-  const { rid, fid, tid, fday, ftime, rem_space } = request.body;
+  const { rid, fid, tid, fdate, ftime } = request.body;
   const query =
-    "Insert into routes (rid,fid,tid,fday,ftime,rem_space) values($1,$2,$3,$4,$5,$6)";
-  pool.query(
-    query,
-    [rid, fid, tid, fday, ftime, rem_space],
-    (error, results) => {
-      if (error) {
-        return response.status(400).json({
-          success: false,
-          error: error.name,
-          message: error.message,
-        });
-      }
-      response.status(201).send(`Routes added with ID: ${results.insertId}`);
+    "Insert into routes (rid,fid,tid,fdate,ftime) values($1,$2,$3,$4,$5)";
+  pool.query(query, [rid, fid, tid, fdate, ftime], (error, results) => {
+    if (error) {
+      return response.status(400).json({
+        success: false,
+        error: error.name,
+        message: error.message,
+      });
     }
-  );
+    response.status(201).send(`Routes added with ID: ${results.insertId}`);
+  });
 };
 
 //admin insert flights
@@ -194,7 +194,7 @@ const insertRoutes = (request, response) => {
 const insertFlights = (request, response) => {
   const { fid, fname, fspace, frating } = request.body;
   const query =
-    "Insert into routes (fid,fname,fspace,frating) values($1,$2,$3,$4)";
+    "Insert into flights (fid,fname,fspace,frating) values($1,$2,$3,$4)";
   pool.query(query, [fid, fname, fspace, frating], (error, results) => {
     if (error) {
       return response.status(400).json({
