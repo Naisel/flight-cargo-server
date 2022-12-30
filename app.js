@@ -48,6 +48,18 @@ app.get("/", (request, response) => {
         route: "/login/admin/showRoutes",
         methods: ["GET", "POST"],
       },
+      {
+        route: "/login/admin/insertDistances",
+        methods: ["GET", "POST"],
+      },
+      {
+        route: "/login/admin/insertRoutes",
+        methods: ["GET", "POST"],
+      },
+      {
+        route: "/login/admin/insertFlights",
+        methods: ["GET", "POST"],
+      },
     ],
   });
 });
@@ -61,9 +73,9 @@ app.get("/login/admin/showBookings",db.showBookings);
 app.get("/login/admin/showPassenger",db.showPassenger);
 app.get("/login/admin/showRoutes",db.showRoutes);
 app.get("/login/admin/showDistances",db.showDistances);
-
-
-
+app.get("/login/admin/insertDistances",db.insertDistances);
+app.get("/login/admin/insertRoutes",db.insertRoutes);
+app.get("/login/admin/insertFlights",db.insertFlights);
 
 app.listen(process.env.PORT, () => console.log("app is running"));
 
