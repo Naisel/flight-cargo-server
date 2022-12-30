@@ -76,10 +76,79 @@ const loginAdmin = (request, response) => {
     response.status(200).json(results.rows);
   });
 };
+const showFlights = (request, response) => {
+  pool.query("SELECT * FROM flights ", (error, results) => {
+    if (error) {
+      return response.status(400).json({
+        success: false,
+        error: error.name,
+        message: error.message,
+      });
+    }
+    response.status(200).json(results.rows);
+  });
+};
+
+const showBookings = (request, response) => {
+  pool.query("SELECT * FROM bookings ", (error, results) => {
+    if (error) {
+      return response.status(400).json({
+        success: false,
+        error: error.name,
+        message: error.message,
+      });
+    }
+    response.status(200).json(results.rows);
+  });
+};
+
+const showPassenger = (request, response) => {
+  pool.query("SELECT * FROM passenger ", (error, results) => {
+    if (error) {
+      return response.status(400).json({
+        success: false,
+        error: error.name,
+        message: error.message,
+      });
+    }
+    response.status(200).json(results.rows);
+  });
+};
+
+const showRoutes = (request, response) => {
+  pool.query("SELECT * FROM routes ", (error, results) => {
+    if (error) {
+      return response.status(400).json({
+        success: false,
+        error: error.name,
+        message: error.message,
+      });
+    }
+    response.status(200).json(results.rows);
+  });
+};
+
+const showDistances = (request, response) => {
+  pool.query("SELECT * FROM routes ", (error, results) => {
+    if (error) {
+      return response.status(400).json({
+        success: false,
+        error: error.name,
+        message: error.message,
+      });
+    }
+    response.status(200).json(results.rows);
+  });
+};
 
 module.exports = {
   getUsers,
   RegisterUsers,
   loginUser,
   loginAdmin,
+  showFlights,
+  showBookings,
+  showPassenger,
+  showRoutes,
+  showDistances
 };

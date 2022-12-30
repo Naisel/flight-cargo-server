@@ -36,6 +36,18 @@ app.get("/", (request, response) => {
         route: "/login/admin",
         methods: ["GET", "POST"],
       },
+      {
+        route: "/login/admin/showFlights",
+        methods: ["GET", "POST"],
+      },
+      {
+        route: "/login/admin/showBookings",
+        methods: ["GET", "POST"],
+      },
+      {
+        route: "/login/admin/showRoutes",
+        methods: ["GET", "POST"],
+      },
     ],
   });
 });
@@ -44,7 +56,11 @@ app.get("/users", db.getUsers);
 app.post("/register", db.RegisterUsers);
 app.get("/login/user", db.loginUser);
 app.get("/login/admin", db.loginAdmin);
-
+app.get("/login/admin/showFlights",db.showFlights);
+app.get("/login/admin/showBookings",db.showBookings);
+app.get("/login/admin/showPassenger",db.showPassenger);
+app.get("/login/admin/showRoutes",db.showRoutes);
+app.get("/login/admin/showDistances",db.showDistances);
 
 
 
