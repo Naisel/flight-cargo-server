@@ -74,7 +74,7 @@ app.get("/", (request, response) => {
 
 app.get("/users", db.getUsers);
 app.post("/register", db.RegisterUsers);
-app.get("/login/user", db.loginUser);
+app.post("/login/user", db.loginUser);
 app.get("/login/admin", db.loginAdmin);
 app.get("/login/admin/showFlights",db.showFlights);
 app.get("/login/admin/showBookings",db.showBookings);
