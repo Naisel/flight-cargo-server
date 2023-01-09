@@ -72,6 +72,7 @@ app.get("/", (request, response) => {
   });
 });
 
+
 app.get("/users", db.getUsers);
 app.post("/register", db.RegisterUsers);
 app.post("/login/user", db.loginUser);
@@ -84,7 +85,7 @@ app.get("/login/admin/showDistances",db.showDistances);
 app.get("/login/admin/insertDistances",db.insertDistances);
 app.get("/login/admin/insertRoutes",db.insertRoutes);
 app.get("/login/admin/insertFlights",db.insertFlights);
-app.get("/FlightDetails",db.flightDetails);
+app.post("/FlightDetails", db.flightDetails);
 app.get("/Bookings",db.Booking);
 
 
