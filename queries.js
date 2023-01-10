@@ -256,6 +256,27 @@ const Booking = (request, response) => {
   });
 };
 
+//get user booking
+
+const myBooking = (request, response) => {
+  const { pid } = request.body;
+  const query =
+    "select fname,source,dest,fdate,ftime,space_required,payment from bookings natural join routes natural join flights natural join distances where pid = $1";
+  pool.query(query, [pid], (error, results) => {
+    if (error) {
+      return response.status(400).json({
+        success: false,
+        error: error.name,
+        message: error.message,
+      });
+    }
+    response.status(200).json(results.rows);
+  });
+};
+
+
+
+
 module.exports = {
   getUsers,
   RegisterUsers,
@@ -271,4 +292,5 @@ module.exports = {
   insertRoutes,
   flightDetails,
   Booking,
+  myBooking,
 };

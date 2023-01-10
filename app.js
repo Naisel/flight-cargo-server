@@ -87,6 +87,7 @@ app.post("/login/admin/insertRoutes", db.insertRoutes);
 app.post("/login/admin/insertFlights", db.insertFlights);
 app.post("/FlightDetails", db.flightDetails);
 app.post("/Bookings", db.Booking);
+app.post("/myBookings", db.myBooking);
 
 
 app.listen(process.env.PORT, () => console.log("app is running"));
