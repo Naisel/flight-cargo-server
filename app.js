@@ -76,17 +76,17 @@ app.get("/", (request, response) => {
 app.get("/users", db.getUsers);
 app.post("/register", db.RegisterUsers);
 app.post("/login/user", db.loginUser);
-app.get("/login/admin", db.loginAdmin);
-app.get("/login/admin/showFlights",db.showFlights);
-app.get("/login/admin/showBookings",db.showBookings);
-app.get("/login/admin/showPassenger",db.showPassenger);
-app.get("/login/admin/showRoutes",db.showRoutes);
-app.get("/login/admin/showDistances",db.showDistances);
-app.get("/login/admin/insertDistances",db.insertDistances);
-app.get("/login/admin/insertRoutes",db.insertRoutes);
-app.get("/login/admin/insertFlights",db.insertFlights);
+app.post("/login/admin", db.loginAdmin);
+app.get("/login/admin/showFlights", db.showFlights);
+app.get("/login/admin/showBookings", db.showBookings);
+app.get("/login/admin/showPassenger", db.showPassenger);
+app.get("/login/admin/showRoutes", db.showRoutes);
+app.get("/login/admin/showDistances", db.showDistances);
+app.post("/login/admin/insertDistances", db.insertDistances);
+app.post("/login/admin/insertRoutes", db.insertRoutes);
+app.post("/login/admin/insertFlights", db.insertFlights);
 app.post("/FlightDetails", db.flightDetails);
-app.get("/Bookings",db.Booking);
+app.post("/Bookings", db.Booking);
 
 
 app.listen(process.env.PORT, () => console.log("app is running"));

@@ -241,9 +241,6 @@ const Booking = (request, response) => {
         message: error.message,
       });
     }
-    response
-      .status(201)
-      .send(`Booked Succesfully with ID: ${results.insertId}`);
   });
   pool.query(query2, [space_required, rid], (error, results) => {
     if (error) {
@@ -253,6 +250,7 @@ const Booking = (request, response) => {
         message: error.message,
       });
     }
+    response.status(201).send(`Booked Succesfully`);
   });
 };
 
