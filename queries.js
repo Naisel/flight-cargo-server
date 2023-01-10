@@ -249,7 +249,7 @@ const Booking = (request, response) => {
     if (error) {
       return response.status(400).json({
         success: false,
-        error: error.name,
+        error: error.name + "hello",
         message: error.message,
       });
     }
